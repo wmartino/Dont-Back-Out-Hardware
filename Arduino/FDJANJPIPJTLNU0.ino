@@ -20,6 +20,7 @@ double z;
   
         
 void setup(){
+  pinMode(4, OUTPUT);
   Wire.begin();
   Wire.beginTransmission(MPU_addr);
   Wire.write(0x6B);
@@ -44,6 +45,13 @@ void loop(){
        x= RAD_TO_DEG * (atan2(-yAng, -zAng)+PI);
        y= RAD_TO_DEG * (atan2(-xAng, -zAng)+PI);
        z= RAD_TO_DEG * (atan2(-yAng, -xAng)+PI);
+
+if(y >= 70){
+  digitalWrite(4, HIGH);
+  delay(100);
+  digitalWrite(4,LOW);
+}
+
 if(Serial.available())
     {
         Serial.write(Serial.read());    //send what has been received
@@ -51,13 +59,12 @@ if(Serial.available())
     
   
      Serial.print(x);
-     Serial.write("\t");
+     Serial.write(" ");
      Serial.print(y);
-     Serial.write("\t");
+     Serial.write(" ");
      Serial.print(z);
      Serial.write("\n");
      delay(400);
-     
 }
 
        
